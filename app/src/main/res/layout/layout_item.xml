@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.droidworker.cornermarkviewlib.view.CMImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="150dp"
+                                                    xmlns:cm="http://schemas.android.com/apk/res-auto"
+                                                    android:src="@drawable/test"
+                                                    android:scaleType="fitXY"
+                                                    cm:mark_long_side="40dp"
+                                                    cm:mark_short_side="15dp"
+                                                    cm:mark_stroke_color="#fe8c2f"
+                                                    cm:mark_background_color="#fe8c2f"
+                                                    cm:mark_text_color="#ffffff"
+                                                    cm:mark_text_size="11sp"
+                                                    cm:mark_type="TRAPEZOID"
+                                                    cm:mark_margin_horizontal="10dp"
+                                                    cm:mark_margin_vertical="10dp"
+                                                    cm:mark_radius="10dp"
+                                                    cm:mark_left_top_radius="false"
+                                                    cm:mark_right_top_radius="true"
+                                                    cm:mark_left_bottom_radius="true"
+                                                    cm:mark_right_bottom_radius="false"
+                                                    cm:mark_stroke_width="3dp"
+                                                    cm:mark_location="RIGHT_TOP">
+
+</com.droidworker.cornermarkviewlib.view.CMImageView>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CornerMark">
+        <!--梯形角标长边与视图任一一边的焦点到视图顶点的距离 或者矩形角标的横边-->
+        <attr name="mark_long_side" format="dimension"/>
+        <!--梯形角标短边与视图任一一边的焦点到视图顶点的距离 或者矩形角标的竖边-->
+        <attr name="mark_short_side" format="dimension"/>
+        <!--角标两边的比例 mark_long_side/mark_short_side-->
+        <attr name="mark_side_ratio" format="float"/>
+        <!--距离最近的竖边的距离-->
+        <attr name="mark_margin_horizontal" format="dimension"/>
+        <!--距离最近的横边的距离-->
+        <attr name="mark_margin_vertical" format="dimension"/>
+        <!--支持的角标类型-->
+        <attr name="mark_type" format="enum">
+            <!--梯形-->
+            <enum name="TRAPEZOID" value="1"/>
+            <!--矩形-->
+            <enum name="RECTANGLE" value="2"/>
+        </attr>
+        <!--矩形角标定点的弧度,设置了这个值,将覆盖独立设置的弧度-->
+        <attr name="mark_radius" format="dimension"/>
+        <!--左上角的弧度-->
+        <attr name="mark_left_top_radius" format="boolean"/>
+        <!--右上角的弧度-->
+        <attr name="mark_right_top_radius" format="boolean"/>
+        <!--左下角的弧度-->
+        <attr name="mark_left_bottom_radius" format="boolean"/>
+        <!--右下角的弧度-->
+        <attr name="mark_right_bottom_radius" format="boolean"/>
+        <!--边框的宽度-->
+        <attr name="mark_stroke_width" format="dimension"/>
+        <!--边框的颜色-->
+        <attr name="mark_stroke_color" format="color"/>
+        <!--背景色-->
+        <attr name="mark_background_color" format="color"/>
+        <!--角标文字-->
+        <attr name="mark_text" format="string"/>
+        <!--角标文字颜色-->
+        <attr name="mark_text_color" format="color"/>
+        <!--角标文字大小-->
+        <attr name="mark_text_size" format="dimension"/>
+        <!--角标位置-->
+        <attr name="mark_location" format="enum">
+            <!--左上角-->
+            <enum name="LEFT_TOP" value="1"/>
+            <!--右上角-->
+            <enum name="RIGHT_TOP" value="2"/>
+            <!--左下角-->
+            <enum name="LEFT_BOTTOM" value="3"/>
+            <!--右下角-->
+            <enum name="RIGHT_BOTTOM" value="4"/>
+        </attr>
+    </declare-styleable>
+</resources>
