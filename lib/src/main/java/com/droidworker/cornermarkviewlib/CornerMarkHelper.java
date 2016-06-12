@@ -32,7 +32,10 @@ public class CornerMarkHelper {
         TypedArray typedArray = mContext.obtainStyledAttributes(attrs, R.styleable.CornerMark);
         final int type = typedArray.getInt(R.styleable.CornerMark_mark_type,
                 MarkCreatorFactory.TYPE_TRAPEZOID);
-        setMarkCreator(MarkCreatorFactory.create(type));
+        IMarkCreator creator = MarkCreatorFactory.create(type);
+        if(creator != null){
+            setMarkCreator(creator);
+        }
         typedArray.recycle();
         this.mIMarkCreator.setAttribute(mContext.obtainStyledAttributes(attrs, R.styleable.CornerMark), mContext.getResources().getDisplayMetrics().density);
     }

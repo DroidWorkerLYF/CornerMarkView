@@ -33,8 +33,8 @@ public class MarkCreatorFactory {
             case TYPE_RECTANGLE:
                 return new RectangleMarkCreator();
             case TYPE_TRAPEZOID:
-            default:
                 return new TrapezoidMarkCreator();
         }
+        return null;
     }
 }

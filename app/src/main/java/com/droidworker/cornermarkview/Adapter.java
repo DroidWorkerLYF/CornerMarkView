@@ -18,24 +18,24 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @author luoyanfeng@le.com
+ * @author https://github.com/DroidWorkerLYF
  */
 public class Adapter extends BaseAdapter {
     private List<Data> mList = new ArrayList();
+    private Random random = new Random();
 
     public Adapter(){
-        Random random = new Random();
         for(int i=0;i<100;i++){
             Data data = new Data();
             data.type = random.nextInt(2) + 1;
-            data.text = "会员";//String.valueOf(i + 1);
+            data.text = String.valueOf(i + 1);
             mList.add(data);
         }
     }
 
     @Override
     public int getCount() {
-        return 100;
+        return mList.size();
     }
 
     @Override
@@ -54,7 +54,6 @@ public class Adapter extends BaseAdapter {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item, parent, false);
         }
         Data data = mList.get(position);
-        Random random = new Random();
         CMImageView cmImageView = (CMImageView)convertView;
         IMarkCreator markDrawer = cmImageView.getMarkCreator();
         if(markDrawer == null || markDrawer.getType() != data.type){

@@ -50,8 +50,10 @@ public class CMImageView extends ImageView {
      */
     public void setCornerMarkType(int type) {
         if (mHelper != null) {
-            mHelper.setMarkCreator(MarkCreatorFactory.create(type));
-            invalidate();
+            IMarkCreator creator = MarkCreatorFactory.create(type);
+            if(creator != null){
+                mHelper.setMarkCreator(creator);
+            }
         }
     }
 
@@ -76,17 +78,6 @@ public class CMImageView extends ImageView {
             return null;
         }
         return mHelper.getAttribute();
-    }
-
-    /**
-     * 设置Creator
-     *
-     * @param markCreator markCreator
-     */
-    public void setMarkCreator(IMarkCreator markCreator) {
-        if (mHelper != null) {
-            mHelper.setMarkCreator(markCreator);
-        }
     }
 
     /**
