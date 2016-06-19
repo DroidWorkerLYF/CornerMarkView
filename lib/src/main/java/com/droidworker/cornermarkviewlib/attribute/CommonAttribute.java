@@ -4,8 +4,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.text.TextUtils;
 
-import com.droidworker.cornermarkviewlib.R;
-
 /**
  * 角标需要的基本参数
  *
@@ -106,18 +104,18 @@ public abstract class CommonAttribute {
         if (typedArray == null) {
             return;
         }
-        mDensity = density;
-        mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_stroke_width, dp2Px(DEFAULT_STROKE_WIDTH));
-        mStrokeColor = typedArray.getColor(R.styleable.CornerMark_mark_stroke_color,
-                DEFAULT_STROKE_COLOR);
-        mBackgroundColor = typedArray.getColor(R.styleable.CornerMark_mark_background_color,
-                DEFAULT_BG_COLOR);
-        mTextColor = typedArray.getColor(R.styleable.CornerMark_mark_text_color,
-                DEFAULT_TEXT_COLOR);
-        mTextSize = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_text_size, dp2Px(DEFAULT_TEXT_SIZE));
-        mText = typedArray.getString(R.styleable.CornerMark_mark_text);
-        mLocation = typedArray.getInteger(R.styleable.CornerMark_mark_location, LEFT_TOP);
-        initAttribute(typedArray);
+//        mDensity = density;
+//        mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_stroke_width, dp2Px(DEFAULT_STROKE_WIDTH));
+//        mStrokeColor = typedArray.getColor(R.styleable.CornerMark_mark_stroke_color,
+//                DEFAULT_STROKE_COLOR);
+//        mBackgroundColor = typedArray.getColor(R.styleable.CornerMark_mark_background_color,
+//                DEFAULT_BG_COLOR);
+//        mTextColor = typedArray.getColor(R.styleable.CornerMark_mark_text_color,
+//                DEFAULT_TEXT_COLOR);
+//        mTextSize = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_text_size, dp2Px(DEFAULT_TEXT_SIZE));
+//        mText = typedArray.getString(R.styleable.CornerMark_mark_text);
+//        mLocation = typedArray.getInteger(R.styleable.CornerMark_mark_location, LEFT_TOP);
+//        initAttribute(typedArray);
         typedArray.recycle();
     }
 

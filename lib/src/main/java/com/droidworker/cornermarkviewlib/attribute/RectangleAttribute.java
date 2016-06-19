@@ -2,8 +2,6 @@ package com.droidworker.cornermarkviewlib.attribute;
 
 import android.content.res.TypedArray;
 
-import com.droidworker.cornermarkviewlib.R;
-
 /**
  * 绘制矩形的参数,支持圆角矩形(各角半径相同)
  * The creator of drawing rectangle, support rounded rect
@@ -82,16 +80,16 @@ public class RectangleAttribute extends CommonAttribute {
 
     @Override
     protected void initAttribute(TypedArray typedArray) {
-        mLongSide = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_long_side, dp2Px(DEFAULT_LONG_SIDE));
-        mSideRatio = typedArray.getFloat(R.styleable.CornerMark_mark_side_ratio, DEFAULT_SIDE_RATIO);
-        mShortSide = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_short_side, (int) (mLongSide / mSideRatio));
-        mRadius = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_radius, 0);
-        mLeftTopRadius = typedArray.getBoolean(R.styleable.CornerMark_mark_left_top_radius, false);
-        mRightTopRadius = typedArray.getBoolean(R.styleable.CornerMark_mark_right_top_radius, false);
-        mLeftBottomRadius = typedArray.getBoolean(R.styleable.CornerMark_mark_left_bottom_radius, false);
-        mRightBottomRadius = typedArray.getBoolean(R.styleable.CornerMark_mark_right_bottom_radius, false);
-        mMarginVertical = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_margin_vertical, 0);
-        mMarginHorizontal = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_margin_horizontal, 0);
+//        mLongSide = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_long_side, dp2Px(DEFAULT_LONG_SIDE));
+//        mSideRatio = typedArray.getFloat(R.styleable.CornerMark_mark_side_ratio, DEFAULT_SIDE_RATIO);
+//        mShortSide = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_short_side, (int) (mLongSide / mSideRatio));
+//        mRadius = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_radius, 0);
+//        mLeftTopRadius = typedArray.getBoolean(R.styleable.CornerMark_mark_left_top_radius, false);
+//        mRightTopRadius = typedArray.getBoolean(R.styleable.CornerMark_mark_right_top_radius, false);
+//        mLeftBottomRadius = typedArray.getBoolean(R.styleable.CornerMark_mark_left_bottom_radius, false);
+//        mRightBottomRadius = typedArray.getBoolean(R.styleable.CornerMark_mark_right_bottom_radius, false);
+//        mMarginVertical = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_margin_vertical, 0);
+//        mMarginHorizontal = typedArray.getDimensionPixelSize(R.styleable.CornerMark_mark_margin_horizontal, 0);
     }
 
     public int getLongSide() {

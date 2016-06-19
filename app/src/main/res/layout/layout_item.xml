@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.droidworker.cornermarkviewlib.view.CMImageView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="150dp"
-                                                    xmlns:cm="http://schemas.android.com/apk/res-auto"
-                                                    android:src="@drawable/test"
-                                                    android:scaleType="fitXY"
-                                                    cm:mark_long_side="40dp"
-                                                    cm:mark_short_side="15dp"
-                                                    cm:mark_stroke_color="#fe8c2f"
-                                                    cm:mark_background_color="#fe8c2f"
-                                                    cm:mark_text_color="#ffffff"
-                                                    cm:mark_text_size="11sp"
-                                                    cm:mark_type="TRAPEZOID"
-                                                    cm:mark_margin_horizontal="10dp"
-                                                    cm:mark_margin_vertical="10dp"
-                                                    cm:mark_radius="10dp"
-                                                    cm:mark_left_top_radius="false"
-                                                    cm:mark_right_top_radius="true"
-                                                    cm:mark_left_bottom_radius="true"
-                                                    cm:mark_right_bottom_radius="false"
-                                                    cm:mark_stroke_width="3dp"
-                                                    cm:mark_location="RIGHT_TOP">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
 
-</com.droidworker.cornermarkviewlib.view.CMImageView>
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/test"
+        />
+
+    <com.droidworker.cornermarkviewlib.view.CornerMarkView
+        xmlns:cm="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/corner_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:textSize="11sp"
+        android:gravity="center"
+        android:layout_gravity="right"
+        cm:mark_location="RIGHT_TOP"
+        />
+
+</FrameLayout>
