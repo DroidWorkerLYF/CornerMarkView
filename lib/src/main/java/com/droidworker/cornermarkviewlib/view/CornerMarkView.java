@@ -9,13 +9,13 @@ import android.widget.TextView;
 import com.droidworker.cornermarkviewlib.CornerMarkLocation;
 import com.droidworker.cornermarkviewlib.CornerMarkType;
 import com.droidworker.cornermarkviewlib.R;
-import com.droidworker.cornermarkviewlib.drawable.ICornerMarkDrawable;
+import com.droidworker.cornermarkviewlib.drawable.CornerMarkDrawable;
 
 /**
  * @author https://github.com/DroidWorkerLYF
  */
 public class CornerMarkView extends TextView {
-    private ICornerMarkDrawable mBackground;
+    private CornerMarkDrawable mBackground;
     private int mLocation;
 
     public CornerMarkView(Context context) {
@@ -33,7 +33,7 @@ public class CornerMarkView extends TextView {
         mLocation = typedArray.getInt(R.styleable.CornerMark_mark_location, 1);
     }
 
-    public void setMarkBackground(ICornerMarkDrawable background){
+    public void setMarkBackground(CornerMarkDrawable background){
         if(mBackground == background){
             return;
         }
@@ -45,6 +45,10 @@ public class CornerMarkView extends TextView {
 //            //noinspection deprecation
 //            super.setBackgroundDrawable(background.getDrawable());
 //        }
+    }
+
+    public CornerMarkDrawable getMarkBackground(){
+        return mBackground;
     }
 
     public CornerMarkType getMarkType(){

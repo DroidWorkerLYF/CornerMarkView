@@ -15,7 +15,7 @@ import com.droidworker.cornermarkviewlib.CornerMarkType;
  *
  * @author https://github.com/DroidWorkerLYF
  */
-public class TrapezoidDrawable extends Drawable implements ICornerMarkDrawable{
+public class TrapezoidDrawable extends Drawable implements CornerMarkDrawable {
     /**
      * 梯形的画笔
      * The paint used for drawing rect

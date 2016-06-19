@@ -10,7 +10,7 @@ import com.droidworker.cornermarkviewlib.CornerMarkType;
 /**
  * @author https://github.com/DroidWorkerLYF
  */
-public class GradientDrawable extends android.graphics.drawable.GradientDrawable implements ICornerMarkDrawable {
+public class GradientDrawable extends android.graphics.drawable.GradientDrawable implements CornerMarkDrawable {
 
     @Override
     public void setBounds(int left, int top, int right, int bottom) {

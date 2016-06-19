@@ -9,7 +9,7 @@ import com.droidworker.cornermarkviewlib.CornerMarkType;
 /**
  * @author https://github.com/DroidWorkerLYF
  */
-public interface ICornerMarkDrawable {
+public interface CornerMarkDrawable {
 
     void setLocation(CornerMarkLocation location);
 
