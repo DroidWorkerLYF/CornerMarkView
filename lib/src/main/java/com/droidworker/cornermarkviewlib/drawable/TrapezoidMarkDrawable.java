@@ -1,13 +1,9 @@
 package com.droidworker.cornermarkviewlib.drawable;
 
 import android.graphics.Canvas;
-import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
 
-import com.droidworker.cornermarkviewlib.CornerMarkLocation;
 import com.droidworker.cornermarkviewlib.CornerMarkType;
 
 /**
@@ -15,7 +11,7 @@ import com.droidworker.cornermarkviewlib.CornerMarkType;
  *
  * @author https://github.com/DroidWorkerLYF
  */
-public class TrapezoidDrawable extends Drawable implements CornerMarkDrawable {
+public class TrapezoidMarkDrawable extends CornerMarkDrawable {
     /**
      * 梯形的画笔
      * The paint used for drawing rect
@@ -37,10 +33,6 @@ public class TrapezoidDrawable extends Drawable implements CornerMarkDrawable {
      */
     private int mShortSide;
     /**
-     * 位置
-     */
-    private CornerMarkLocation mLocation;
-    /**
      * 填充颜色
      */
     private int mColor;
@@ -53,7 +45,7 @@ public class TrapezoidDrawable extends Drawable implements CornerMarkDrawable {
      */
     private int height;
 
-    public TrapezoidDrawable(){
+    public TrapezoidMarkDrawable(){
         mRectPaint = new Paint();
         mRectPaint.setAntiAlias(true);
         mPath = new Path();
@@ -82,7 +74,7 @@ public class TrapezoidDrawable extends Drawable implements CornerMarkDrawable {
      */
     private void setPath(int width, int height){
         mPath.reset();
-        switch (mLocation.getLocation()){
+        switch (getLocation().getLocation()){
             case 1:
                 mPath.moveTo(mShortSide, 0);
                 mPath.lineTo(mLongSide, 0);
@@ -118,7 +110,7 @@ public class TrapezoidDrawable extends Drawable implements CornerMarkDrawable {
     public void rotate(Canvas canvas) {
         final int centerX = width /2;
         final int centerY = height/2;
-        switch (mLocation.getLocation()){
+        switch (getLocation().getLocation()){
             case 1:
                 canvas.rotate(-45, centerX, centerY);
                 break;
@@ -139,7 +131,7 @@ public class TrapezoidDrawable extends Drawable implements CornerMarkDrawable {
         int centerY = height/2;
         int x = (mShortSide + (mLongSide - mShortSide) /2 ) / 2;
         int y = x;
-        switch (mLocation.getLocation()){
+        switch (getLocation().getLocation()){
             case 1:
                 canvas.translate(-(centerX- x), -(centerY - y));
                 break;
@@ -160,31 +152,6 @@ public class TrapezoidDrawable extends Drawable implements CornerMarkDrawable {
         if(mRectPaint != null){
             mRectPaint.setAlpha(alpha);
         }
-    }
-
-    @Override
-    public void setColorFilter(ColorFilter colorFilter) {
-        if(mRectPaint != null){
-            mRectPaint.setColorFilter(colorFilter);
-        }
-    }
-
-    @Override
-    public int getOpacity() {
-        return PixelFormat.TRANSPARENT;
-    }
-
-    @Override
-    public void setLocation(CornerMarkLocation location) {
-        if(location == null){
-            return;
-        }
-        this.mLocation = location;
-    }
-
-    @Override
-    public Drawable getDrawable() {
-        return this;
     }
 
     @Override
@@ -220,15 +187,13 @@ public class TrapezoidDrawable extends Drawable implements CornerMarkDrawable {
         this.mShortSide = shortSide;
     }
 
-    public CornerMarkLocation getLocation() {
-        return mLocation;
-    }
-
     public int getColor() {
         return mColor;
     }
 
+    @Override
     public void setColor(int color) {
         this.mColor = color;
     }
+
 }

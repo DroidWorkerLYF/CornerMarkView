@@ -1,6 +1,7 @@
 package com.droidworker.cornermarkviewlib;
 
 /**
+ * 位置的枚举
  * @author https://github.com/DroidWorkerLYF
  */
 public enum CornerMarkLocation {
@@ -35,6 +36,11 @@ public enum CornerMarkLocation {
         return mLocation;
     }
 
+    /**
+     * 把参数转换为位置
+     * @param location location
+     * @return 对应的位置
+     */
     public static CornerMarkLocation convert2Location(int location){
         switch (location){
             case 1:

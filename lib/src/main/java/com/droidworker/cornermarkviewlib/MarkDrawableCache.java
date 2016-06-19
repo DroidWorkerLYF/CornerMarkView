@@ -7,17 +7,19 @@ import com.droidworker.cornermarkviewlib.drawable.CornerMarkDrawable;
 import java.util.ArrayList;
 
 /**
+ * 角标Drawable的缓存
+ *
  * @author https://github.com/DroidWorkerLYF
  */
-public class MarkDrawableManager {
-    private static final MarkDrawableManager sInstance = new MarkDrawableManager();
+public class MarkDrawableCache {
+    private static final MarkDrawableCache sInstance = new MarkDrawableCache();
     private SparseArray<ArrayList<CornerMarkDrawable>> recycledDrawable = new SparseArray<>();
 
-    private MarkDrawableManager(){
+    private MarkDrawableCache(){
 
     }
 
-    public static MarkDrawableManager getInstance(){
+    public static MarkDrawableCache getInstance(){
         return sInstance;
     }
 

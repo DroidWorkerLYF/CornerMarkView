@@ -20,6 +20,7 @@
         android:textColor="#ffffff"
         android:textSize="11sp"
         android:gravity="center"
+        android:padding="3dp"
         android:layout_gravity="right"
         cm:mark_location="RIGHT_TOP"
         />

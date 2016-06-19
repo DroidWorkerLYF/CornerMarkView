@@ -9,10 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.droidworker.cornermarkviewlib.CornerMarkType;
-import com.droidworker.cornermarkviewlib.MarkDrawableManager;
 import com.droidworker.cornermarkviewlib.drawable.CornerMarkDrawable;
-import com.droidworker.cornermarkviewlib.drawable.GradientDrawable;
-import com.droidworker.cornermarkviewlib.drawable.TrapezoidDrawable;
+import com.droidworker.cornermarkviewlib.drawable.GradientMarkDrawable;
+import com.droidworker.cornermarkviewlib.drawable.TrapezoidMarkDrawable;
 import com.droidworker.cornermarkviewlib.view.CornerMarkView;
 
 import java.util.ArrayList;
@@ -75,7 +74,9 @@ public class Adapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
         Data data = mList.get(position);
+
         CornerMarkType cornerMarkType = viewHolder.cornerMarkView.getMarkType();
         if(cornerMarkType == null){
             if(data.type == CornerMarkType.TYPE_TRAPEZOID.getType()){
@@ -86,30 +87,21 @@ public class Adapter extends BaseAdapter {
         } else {
             final int type = cornerMarkType.getType();
             if(type == data.type){
-                if(data.type == CornerMarkType.TYPE_TRAPEZOID.getType()){
-                    TrapezoidDrawable drawable = (TrapezoidDrawable) viewHolder.cornerMarkView.getMarkBackground();
-                    drawable.setColor(data.color);
-                } else if(data.type == CornerMarkType.TYPE_GRADIENT.getType()){
-                    GradientDrawable drawable = (GradientDrawable) viewHolder.cornerMarkView.getMarkBackground();
-                    drawable.setColor(data.color);
-                }
+                CornerMarkDrawable cornerMarkDrawable = viewHolder.cornerMarkView
+                        .getMarkBackground();
+                cornerMarkDrawable.setColor(data.color);
             } else if(data.type == CornerMarkType.TYPE_TRAPEZOID.getType()){
-                CornerMarkDrawable drawable = viewHolder.cornerMarkView.getMarkBackground();
-                MarkDrawableManager.getInstance().put(type, drawable);
-                TrapezoidDrawable recycled = (TrapezoidDrawable) MarkDrawableManager.getInstance().get(data.type);
-                if(recycled != null){
-                    recycled.setColor(data.color);
-                    viewHolder.cornerMarkView.setMarkBackground(recycled);
+                CornerMarkDrawable drawable = viewHolder.cornerMarkView.getMarkDrawable(data.type);
+                if(drawable != null){
+                    drawable.setColor(data.color);
                 } else {
                     viewHolder.cornerMarkView.setMarkBackground(createTrapezoid(data.color));
                 }
 
             } else if(data.type == CornerMarkType.TYPE_GRADIENT.getType()){
-                CornerMarkDrawable drawable = viewHolder.cornerMarkView.getMarkBackground();
-                MarkDrawableManager.getInstance().put(type, drawable);
-                GradientDrawable recycled = (GradientDrawable) MarkDrawableManager.getInstance().get(data.type);
-                if(recycled != null){
-                    viewHolder.cornerMarkView.setMarkBackground(recycled);
+                CornerMarkDrawable drawable = viewHolder.cornerMarkView.getMarkDrawable(data.type);
+                if(drawable != null){
+                    drawable.setColor(data.color);
                 } else {
                     viewHolder.cornerMarkView.setMarkBackground(createGradient(data.color));
                 }
@@ -119,18 +111,18 @@ public class Adapter extends BaseAdapter {
         return convertView;
     }
 
-    public TrapezoidDrawable createTrapezoid(int color){
+    public TrapezoidMarkDrawable createTrapezoid(int color){
         Log.e("lyf", "createTrapezoid");
-        TrapezoidDrawable trapezoidDrawable = new TrapezoidDrawable();
-        trapezoidDrawable.setColor(color);
-        trapezoidDrawable.setLongSide(120);
-        trapezoidDrawable.setShortSide(45);
-        return trapezoidDrawable;
+        TrapezoidMarkDrawable trapezoidMarkDrawable = new TrapezoidMarkDrawable();
+        trapezoidMarkDrawable.setColor(color);
+        trapezoidMarkDrawable.setLongSide(120);
+        trapezoidMarkDrawable.setShortSide(45);
+        return trapezoidMarkDrawable;
     }
 
-    public GradientDrawable createGradient(int color){
+    public GradientMarkDrawable createGradient(int color){
         Log.e("lyf", "createGradient");
-        GradientDrawable gradientDrawable= new GradientDrawable();
+        GradientMarkDrawable gradientDrawable= new GradientMarkDrawable();
         gradientDrawable.setCornerRadii(new float[]{0, 0, 6, 6, 0, 0, 0, 0});
         gradientDrawable.setColor(color);
         return gradientDrawable;

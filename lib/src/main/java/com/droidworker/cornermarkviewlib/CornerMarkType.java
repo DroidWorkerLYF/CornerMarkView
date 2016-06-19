@@ -10,8 +10,8 @@ public enum CornerMarkType {
      */
     TYPE_TRAPEZOID(1),
     /**
-     * 矩形类型
-     * Rectangle type
+     * 类似android.graphics.drawable.GradientDrawable
+     * Gradient type
      */
     TYPE_GRADIENT(2);
 

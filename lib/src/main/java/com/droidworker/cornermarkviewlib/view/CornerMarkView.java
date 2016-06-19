@@ -3,11 +3,13 @@ package com.droidworker.cornermarkviewlib.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.droidworker.cornermarkviewlib.CornerMarkLocation;
 import com.droidworker.cornermarkviewlib.CornerMarkType;
+import com.droidworker.cornermarkviewlib.MarkDrawableCache;
 import com.droidworker.cornermarkviewlib.R;
 import com.droidworker.cornermarkviewlib.drawable.CornerMarkDrawable;
 
@@ -31,6 +33,7 @@ public class CornerMarkView extends TextView {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CornerMark);
         mLocation = typedArray.getInt(R.styleable.CornerMark_mark_location, 1);
+        typedArray.recycle();
     }
 
     public void setMarkBackground(CornerMarkDrawable background){
@@ -39,16 +42,36 @@ public class CornerMarkView extends TextView {
         }
         mBackground = background;
         mBackground.setLocation(CornerMarkLocation.convert2Location(mLocation));
-//        if(Build.VERSION.SDK_INT > 16){
-//            super.setBackground(background.getDrawable());
-//        } else {
-//            //noinspection deprecation
-//            super.setBackgroundDrawable(background.getDrawable());
-//        }
+        if(Build.VERSION.SDK_INT > 16){
+            super.setBackground(background);
+        } else {
+            //noinspection deprecation
+            super.setBackgroundDrawable(background);
+        }
     }
 
+    /**
+     * 返回现在用于绘制的CornerMarkDrawable
+     * @return
+     */
     public CornerMarkDrawable getMarkBackground(){
         return mBackground;
+    }
+
+    /**
+     * 从缓存中获取给定类型的CornerMarkDrawable,并把当前的放入缓存
+     * @param type 角标类型
+     * @return CornerMarkDrawable
+     */
+    public CornerMarkDrawable getMarkDrawable(int type){
+        CornerMarkDrawable background = getMarkBackground();
+        MarkDrawableCache.getInstance().put(background.getMarkType().getType(), background);
+        CornerMarkDrawable recycled = MarkDrawableCache.getInstance().get(type);
+        if(recycled == null){
+            return null;
+        }
+        setMarkBackground(recycled);
+        return recycled;
     }
 
     public CornerMarkType getMarkType(){
@@ -68,16 +91,7 @@ public class CornerMarkView extends TextView {
                 setMeasuredDimension(size[0], size[1]);
             } else {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-                mBackground.onMeasure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec
-                        .EXACTLY), MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec
-                        .EXACTLY));
             }
-//            int[] size = mBackground.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//            if(size == null || size.length != 2){
-//                super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//            } else {
-//                setMeasuredDimension(size[0], size[1]);
-//            }
         }
     }
 
@@ -86,7 +100,7 @@ public class CornerMarkView extends TextView {
         if(mBackground == null){
             return;
         }
-        mBackground.getDrawable().draw(canvas);
+        mBackground.draw(canvas);
         super.onDraw(canvas);
         mBackground.restore(canvas);
     }
