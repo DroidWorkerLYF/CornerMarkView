@@ -1,6 +1,6 @@
 package com.droidworker.cornermarkview;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,40 +9,43 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.droidworker.cornermarkviewlib.CornerMarkType;
-import com.droidworker.cornermarkviewlib.drawable.CornerMarkDrawable;
-import com.droidworker.cornermarkviewlib.drawable.GradientMarkDrawable;
+import com.droidworker.cornermarkviewlib.drawable.RectangleMarkDrawable;
 import com.droidworker.cornermarkviewlib.drawable.TrapezoidMarkDrawable;
 import com.droidworker.cornermarkviewlib.view.CornerMarkView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author https://github.com/DroidWorkerLYF
  */
 public class Adapter extends BaseAdapter {
     private List<Data> mList = new ArrayList<>();
-    private static final int BLUE = Color.parseColor("#5895ed");
-    private static final int GREEN = Color.parseColor("#a2c21d");
-    private static final int RED = Color.parseColor("#EF534e");
-    private static final int ORANGE = Color.parseColor("#fe8c2f");
+    private int[] text = new int[]{R.string.text_1, R.string.text_2, R.string.text_3, R.string.text_4,
+            R.string.text_5,R.string.text_6,R.string.text_7,R.string.text_8,R.string.text_9,
+            R.string.text_10,R.string.text_11,R.string.text_12, R.string.text_13, R.string.text_14};
 
-    public Adapter(){
-        Random random = new Random();
+    public Adapter(Context context){
+        final int blue = context.getResources().getColor(R.color.blue);
+        final int green = context.getResources().getColor(R.color.green);
+        final int red = context.getResources().getColor(R.color.red);
+        final int orange = context.getResources().getColor(R.color.orange);
         for(int i=0;i<100;i++){
             Data data = new Data();
             if(i % 2 == 0){
-                data.color = ORANGE;
+                data.color = blue;
             } else if(i %3 == 0){
-                data.color = BLUE;
-            } else if(i % 7 == 0){
-                data.color = GREEN;
+                data.color = green;
             } else {
-                data.color = RED;
+                data.color = red;
             }
-            data.type = random.nextInt(2) + 1;
-            data.text = String.valueOf(i + 100);
+            data.textId = text[i % 14];
+            if(data.textId == R.string.text_13 || data.textId == R.string.text_14){
+                data.type = CornerMarkType.TYPE_TRAPEZOID.getType();
+                data.color = orange;
+            } else {
+                data.type = CornerMarkType.TYPE_RECTANGLE.getType();
+            }
             mList.add(data);
         }
     }
@@ -78,36 +81,31 @@ public class Adapter extends BaseAdapter {
         Data data = mList.get(position);
 
         CornerMarkType cornerMarkType = viewHolder.cornerMarkView.getMarkType();
-        if(cornerMarkType == null){
-            if(data.type == CornerMarkType.TYPE_TRAPEZOID.getType()){
-                viewHolder.cornerMarkView.setMarkBackground(createTrapezoid(data.color));
-            } else if(data.type == CornerMarkType.TYPE_GRADIENT.getType()){
-                viewHolder.cornerMarkView.setMarkBackground(createGradient(data.color));
-            }
-        } else {
-            final int type = cornerMarkType.getType();
-            if(type == data.type){
-                CornerMarkDrawable cornerMarkDrawable = viewHolder.cornerMarkView
-                        .getMarkBackground();
-                cornerMarkDrawable.setColor(data.color);
-            } else if(data.type == CornerMarkType.TYPE_TRAPEZOID.getType()){
-                CornerMarkDrawable drawable = viewHolder.cornerMarkView.getMarkDrawable(data.type);
-                if(drawable != null){
-                    drawable.setColor(data.color);
-                } else {
-                    viewHolder.cornerMarkView.setMarkBackground(createTrapezoid(data.color));
-                }
-
-            } else if(data.type == CornerMarkType.TYPE_GRADIENT.getType()){
-                CornerMarkDrawable drawable = viewHolder.cornerMarkView.getMarkDrawable(data.type);
-                if(drawable != null){
-                    drawable.setColor(data.color);
-                } else {
-                    viewHolder.cornerMarkView.setMarkBackground(createGradient(data.color));
-                }
-            }
+        int type = -1;
+        if(cornerMarkType != null){
+            type = cornerMarkType.getType();
         }
-        viewHolder.cornerMarkView.setText(data.text);
+//        if(type == data.type){
+//            CornerMarkDrawable cornerMarkDrawable = viewHolder.cornerMarkView
+//                    .getMarkBackground();
+//            cornerMarkDrawable.setColor(data.color);
+//        } else if(data.type == CornerMarkType.TYPE_TRAPEZOID.getType()){
+//            CornerMarkDrawable drawable = viewHolder.cornerMarkView.getMarkDrawable(data.type);
+//            if(drawable != null){
+//                drawable.setColor(data.color);
+//            } else {
+//                viewHolder.cornerMarkView.setMarkBackground(createTrapezoid(data.color));
+//            }
+//
+//        } else if(data.type == CornerMarkType.TYPE_RECTANGLE.getType()){
+//            CornerMarkDrawable drawable = viewHolder.cornerMarkView.getMarkDrawable(data.type);
+//            if(drawable != null){
+//                drawable.setColor(data.color);
+//            } else {
+//                viewHolder.cornerMarkView.setMarkBackground(createGradient(data.color));
+//            }
+//        }
+        viewHolder.cornerMarkView.setText(data.textId);
         return convertView;
     }
 
@@ -120,12 +118,12 @@ public class Adapter extends BaseAdapter {
         return trapezoidMarkDrawable;
     }
 
-    public GradientMarkDrawable createGradient(int color){
+    public RectangleMarkDrawable createGradient(int color){
         Log.e("lyf", "createGradient");
-        GradientMarkDrawable gradientDrawable= new GradientMarkDrawable();
-        gradientDrawable.setCornerRadii(new float[]{0, 0, 6, 6, 0, 0, 0, 0});
-        gradientDrawable.setColor(color);
-        return gradientDrawable;
+        RectangleMarkDrawable rectangleMarkDrawable= new RectangleMarkDrawable();
+        rectangleMarkDrawable.setRadiusArray(new float[]{0, 0, 6, 6, 0, 0, 0, 0});
+        rectangleMarkDrawable.setColor(color);
+        return rectangleMarkDrawable;
     }
 
     public class ViewHolder {
@@ -136,6 +134,6 @@ public class Adapter extends BaseAdapter {
     public class Data {
         int color;
         int type;
-        String text;
+        int textId;
     }
 }

@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">CornerMarkView</string>
+    <string name="text_1">预约</string>
+    <string name="text_2">已预约</string>
+    <string name="text_3">回看</string>
+    <string name="text_4">正片</string>
+    <string name="text_5">频道</string>
+    <string name="text_6">活动</string>
+    <string name="text_7">专题</string>
+    <string name="text_8">全网</string>
+    <string name="text_9">app专享</string>
+    <string name="text_10">独播</string>
+    <string name="text_11">自制</string>
+    <string name="text_12">4k</string>
+    <string name="text_13">会员</string>
+    <string name="text_14">付费</string>
 </resources>

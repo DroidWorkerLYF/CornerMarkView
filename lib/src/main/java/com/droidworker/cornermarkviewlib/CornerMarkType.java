@@ -1,6 +1,12 @@
 package com.droidworker.cornermarkviewlib;
 
+import com.droidworker.cornermarkviewlib.drawable.RectangleMarkDrawable;
+import com.droidworker.cornermarkviewlib.drawable.TrapezoidMarkDrawable;
+
 /**
+ * 角标drawable的类型
+ * Corner mark's type
+ *
  * @author https://github.com/DroidWorkerLYF
  */
 public enum CornerMarkType {
@@ -8,29 +14,41 @@ public enum CornerMarkType {
      * 梯形类型
      * Trapezoid type
      */
-    TYPE_TRAPEZOID(1),
+    TYPE_TRAPEZOID(10, TrapezoidMarkDrawable.class.getName()),
     /**
-     * 类似android.graphics.drawable.GradientDrawable
-     * Gradient type
+     * 支持圆角,渐变色等等,就是android.graphics.drawable.GradientDrawable
+     * Rectangle type
      */
-    TYPE_GRADIENT(2);
+    TYPE_RECTANGLE(20, RectangleMarkDrawable.class.getName());
 
     private int type;
+    private String clazz;
 
-    CornerMarkType(int type){
+    CornerMarkType(int type, String clazz){
         this.type = type;
+        this.clazz = clazz;
     }
 
     public int getType(){
-        return this.type;
+        return type;
     }
 
+    public String getClazz(){
+        return clazz;
+    }
+
+    /**
+     * 将int值转为对应类型
+     *
+     * @param type 类型对应的int值
+     * @return corresponding {@code CornerMarkType}
+     */
     public static CornerMarkType convert2Type(int type){
         switch (type){
-            case 1:
+            case 10:
                 return TYPE_TRAPEZOID;
-            case 2:
-                return TYPE_GRADIENT;
+            case 20:
+                return TYPE_RECTANGLE;
         }
         return null;
     }

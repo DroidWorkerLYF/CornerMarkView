@@ -13,6 +13,6 @@ public class MainActivity extends AppCompatActivity {
 
         GridView gridView = (GridView) findViewById(R.id.grid_view);
         gridView.setNumColumns(2);
-        gridView.setAdapter(new Adapter());
+        gridView.setAdapter(new Adapter(this));
     }
 }

@@ -20,4 +20,28 @@
             <enum name="RIGHT_BOTTOM" value="4"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="CornerMark.Trapezoid">
+        <!--填充色-->
+        <attr name="trapezoid_background_color" format="color"/>
+        <!--长边-->
+        <attr name="long_side" format="dimension"/>
+        <!--短边-->
+        <attr name="short_side" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="CornerMark.Rectangle">
+        <!--填充色-->
+        <attr name="rectangle_background_color" format="color"/>
+        <!--左上角圆角半径-->
+        <attr name="left_top_corner" format="dimension"/>
+        <!--右上角圆角半径-->
+        <attr name="right_top_corner" format="dimension"/>
+        <!--左下角圆角半径-->
+        <attr name="left_bottom_corner" format="dimension"/>
+        <!--右下角圆角半径-->
+        <attr name="right_bottom_corner" format="dimension"/>
+        <!--圆角半径,会被独立设定的圆角半径覆盖-->
+        <attr name="corner" format="float"/>
+    </declare-styleable>
 </resources>

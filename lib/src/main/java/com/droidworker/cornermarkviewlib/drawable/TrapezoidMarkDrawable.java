@@ -1,13 +1,21 @@
 package com.droidworker.cornermarkviewlib.drawable;
 
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PixelFormat;
+import android.util.AttributeSet;
 
 import com.droidworker.cornermarkviewlib.CornerMarkType;
+import com.droidworker.cornermarkviewlib.R;
 
 /**
  * 梯形角标背景
+ * This drawable will draw a trapezoid
  *
  * @author https://github.com/DroidWorkerLYF
  */
@@ -34,26 +42,46 @@ public class TrapezoidMarkDrawable extends CornerMarkDrawable {
     private int mShortSide;
     /**
      * 填充颜色
+     * Full fill color
      */
     private int mColor;
     /**
-     * 宽
+     * 依附的视图的宽度
+     * The view which this drawable attached 's width
      */
     private int width;
     /**
-     * 高
+     * 依附的视图的高度
+     * The view which this drawable attached 's height
      */
     private int height;
+    /**
+     * 包含宽度和高度,用于设定视图大小的数组
+     * This array contains width and height.It will be used for setting view's size
+     */
+    private int[] mSize;
 
-    public TrapezoidMarkDrawable(){
+    public TrapezoidMarkDrawable() {
         mRectPaint = new Paint();
         mRectPaint.setAntiAlias(true);
         mPath = new Path();
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void setAttributeSet(Context context, AttributeSet attributeSet) {
+        TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.CornerMark_Trapezoid);
+        mColor = typedArray.getColor(R.styleable.CornerMark_Trapezoid_trapezoid_background_color, Color.WHITE);
+        mLongSide = typedArray.getDimensionPixelSize(R.styleable.CornerMark_Trapezoid_long_side, 0);
+        mShortSide = typedArray.getDimensionPixelSize(R.styleable.CornerMark_Trapezoid_short_side, 0);
+        typedArray.recycle();
+        onSizeChanged();
+    }
 
+    @Override
+    public void draw(Canvas canvas) {
+        //绘制背景后,需要平移,旋转视图来将文字绘制到正确的位置,如果后续再视图中还有其他绘制,需要先调用restore方法
+        //In order to draw text at the right place, we need to translate and rotate the canvas.Call
+        //restore before you drawing other things.
         setPath(canvas.getWidth(), canvas.getHeight());
         mRectPaint.setStyle(Paint.Style.FILL);
         mRectPaint.setColor(mColor);
@@ -67,14 +95,14 @@ public class TrapezoidMarkDrawable extends CornerMarkDrawable {
      * 设置梯形绘制路径
      * Set drawing path
      *
-     * @param width 画布的宽
-     *              the width of canvas
+     * @param width  画布的宽
+     *               the width of canvas
      * @param height 画布的高
      *               the height of canvas
      */
-    private void setPath(int width, int height){
+    private void setPath(int width, int height) {
         mPath.reset();
-        switch (getLocation().getLocation()){
+        switch (mLocation.getLocation()) {
             case 1:
                 mPath.moveTo(mShortSide, 0);
                 mPath.lineTo(mLongSide, 0);
@@ -107,10 +135,16 @@ public class TrapezoidMarkDrawable extends CornerMarkDrawable {
         mPath.close();
     }
 
+    /**
+     * 旋转画布
+     * Rotate canvas
+     *
+     * @param canvas 画布
+     */
     public void rotate(Canvas canvas) {
-        final int centerX = width /2;
-        final int centerY = height/2;
-        switch (getLocation().getLocation()){
+        final int centerX = width / 2;
+        final int centerY = height / 2;
+        switch (mLocation.getLocation()) {
             case 1:
                 canvas.rotate(-45, centerX, centerY);
                 break;
@@ -126,32 +160,50 @@ public class TrapezoidMarkDrawable extends CornerMarkDrawable {
         }
     }
 
-    public void translate(Canvas canvas){
-        int centerX = width /2;
-        int centerY = height/2;
-        int x = (mShortSide + (mLongSide - mShortSide) /2 ) / 2;
-        int y = x;
-        switch (getLocation().getLocation()){
+    /**
+     * 平移画布
+     * Translate canvas
+     *
+     * @param canvas 画布
+     */
+    public void translate(Canvas canvas) {
+        int centerX = width / 2;
+        int centerY = height / 2;
+        int x = (mShortSide + (mLongSide - mShortSide) / 2) / 2;
+        switch (mLocation.getLocation()) {
             case 1:
-                canvas.translate(-(centerX- x), -(centerY - y));
+                canvas.translate(-(centerX - x), -(centerY - x));
                 break;
             case 2:
-                canvas.translate(centerX - x, -(centerY - y));
+                canvas.translate(centerX - x, -(centerY - x));
                 break;
             case 3:
-                canvas.translate(-(centerX- x), centerY - y);
+                canvas.translate(-(centerX - x), centerY - x);
                 break;
             case 4:
-                canvas.translate(centerX - x, centerY - y);
+                canvas.translate(centerX - x, centerY - x);
                 break;
         }
     }
 
     @Override
+    public void restore(Canvas canvas) {
+        canvas.restore();
+    }
+
+    @Override
     public void setAlpha(int alpha) {
-        if(mRectPaint != null){
-            mRectPaint.setAlpha(alpha);
-        }
+
+    }
+
+    @Override
+    public void setColorFilter(ColorFilter colorFilter) {
+
+    }
+
+    @Override
+    public int getOpacity() {
+        return PixelFormat.OPAQUE;
     }
 
     @Override
@@ -160,35 +212,27 @@ public class TrapezoidMarkDrawable extends CornerMarkDrawable {
     }
 
     @Override
-    public int[] onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        width = (int) Math.sqrt(Math.pow(mLongSide, 2) * 2);
-        height = (int) ((mLongSide - mShortSide) * Math.cos(45 * Math.PI / 180)) * 3;
-        return new int[]{width, height};
+    public boolean needChangeViewSize() {
+        return true;
     }
 
     @Override
-    public void restore(Canvas canvas) {
-        canvas.restore();
+    public int[] onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        return mSize;
     }
 
-    public int getLongSide() {
-        return mLongSide;
-    }
-
-    public void setLongSide(int longSide) {
-        this.mLongSide = longSide;
-    }
-
-    public int getShortSide() {
-        return mShortSide;
-    }
-
-    public void setShortSide(int shortSide) {
-        this.mShortSide = shortSide;
-    }
-
-    public int getColor() {
-        return mColor;
+    /**
+     * 宽度或者高度改变时,重新设置数组大小
+     * Reset mSize when long side or short side changed
+     */
+    private void onSizeChanged() {
+        width = mLongSide;
+        height = mLongSide;
+        if (mSize == null) {
+            mSize = new int[2];
+        }
+        mSize[0] = width;
+        mSize[1] = height;
     }
 
     @Override
@@ -196,4 +240,18 @@ public class TrapezoidMarkDrawable extends CornerMarkDrawable {
         this.mColor = color;
     }
 
+    @Override
+    public int getColor() {
+        return mColor;
+    }
+
+    public void setLongSide(int longSide) {
+        mLongSide = longSide;
+        onSizeChanged();
+    }
+
+    public void setShortSide(int shortSide) {
+        mShortSide = shortSide;
+        onSizeChanged();
+    }
 }
