@@ -1,5 +1,6 @@
 package com.droidworker.cornermarkviewlib;
 
+import com.droidworker.cornermarkviewlib.drawable.BookMarkDrawable;
 import com.droidworker.cornermarkviewlib.drawable.RectangleMarkDrawable;
 import com.droidworker.cornermarkviewlib.drawable.TrapezoidMarkDrawable;
 
@@ -19,7 +20,9 @@ public enum CornerMarkType {
      * 支持圆角,渐变色等等,就是android.graphics.drawable.GradientDrawable
      * Rectangle type
      */
-    TYPE_RECTANGLE(20, RectangleMarkDrawable.class.getName());
+    TYPE_RECTANGLE(20, RectangleMarkDrawable.class.getName()),
+
+    TYPE_BOOKMARK(30, BookMarkDrawable.class.getName());
 
     private int type;
     private String clazz;
@@ -49,6 +52,8 @@ public enum CornerMarkType {
                 return TYPE_TRAPEZOID;
             case 20:
                 return TYPE_RECTANGLE;
+            case 30:
+                return TYPE_BOOKMARK;
         }
         return null;
     }

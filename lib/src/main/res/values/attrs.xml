@@ -4,9 +4,10 @@
         <!--支持的角标类型-->
         <attr name="mark_type" format="enum">
             <!--梯形-->
-            <enum name="TRAPEZOID" value="1"/>
+            <enum name="TRAPEZOID" value="10"/>
             <!--矩形-->
-            <enum name="RECTANGLE" value="2"/>
+            <enum name="RECTANGLE" value="20"/>
+            <enum name="BOOKMARK" value="30"/>
         </attr>
         <!--角标位置-->
         <attr name="mark_location" format="enum">
@@ -43,5 +44,16 @@
         <attr name="right_bottom_corner" format="dimension"/>
         <!--圆角半径,会被独立设定的圆角半径覆盖-->
         <attr name="corner" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="CornerMark.BookMark">
+        <!--填充色-->
+        <attr name="bookmark_background_color" format="color"/>
+        <!--凸起顶点的角度-->
+        <attr name="angle" format="integer"/>
+        <!--横边长度-->
+        <attr name="horizontal_side" format="dimension"/>
+        <!--竖边长度-->
+        <attr name="vertical_side" format="dimension"/>
     </declare-styleable>
 </resources>

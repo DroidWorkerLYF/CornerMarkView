@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.droidworker.cornermarkviewlib.CornerMarkLocation;
 import com.droidworker.cornermarkviewlib.CornerMarkType;
+import com.droidworker.cornermarkviewlib.drawable.BookMarkDrawable;
 import com.droidworker.cornermarkviewlib.drawable.CornerMarkDrawable;
 import com.droidworker.cornermarkviewlib.drawable.RectangleMarkDrawable;
 import com.droidworker.cornermarkviewlib.drawable.TrapezoidMarkDrawable;
@@ -46,6 +47,9 @@ public class Adapter extends BaseAdapter {
             if(data.textId == R.string.text_13 || data.textId == R.string.text_14){
                 data.type = CornerMarkType.TYPE_TRAPEZOID.getType();
                 data.color = orange;
+            } else if(i % 10 == 0){
+                data.type = CornerMarkType.TYPE_BOOKMARK.getType();
+                data.textId = R.string.text_12;
             } else {
                 data.type = CornerMarkType.TYPE_RECTANGLE.getType();
             }
@@ -101,6 +105,8 @@ public class Adapter extends BaseAdapter {
                 viewHolder.cornerMarkView.setMarkBackground(createTrapezoid(data.color));
             } else if(data.type == CornerMarkType.TYPE_RECTANGLE.getType()){
                 viewHolder.cornerMarkView.setMarkBackground(createGradient(data.color));
+            } else if(data.type == CornerMarkType.TYPE_BOOKMARK.getType()){
+                viewHolder.cornerMarkView.setMarkBackground(createBookMark(data.color));
             }
         }
         viewHolder.cornerMarkView.setText(data.textId);
@@ -122,6 +128,16 @@ public class Adapter extends BaseAdapter {
         rectangleMarkDrawable.setRadiusArray(new float[]{0, 0, 6, 6, 0, 0, 0, 0});
         rectangleMarkDrawable.setColor(color);
         return rectangleMarkDrawable;
+    }
+
+    public BookMarkDrawable createBookMark(int color){
+        Log.e(TAG, "createBookMark");
+        BookMarkDrawable bookMarkDrawable = new BookMarkDrawable();
+        bookMarkDrawable.setColor(color);
+        bookMarkDrawable.setAngle(160);
+        bookMarkDrawable.setHorizontalSide(60);
+        bookMarkDrawable.setVerticalSide(120);
+        return bookMarkDrawable;
     }
 
     public class ViewHolder {
