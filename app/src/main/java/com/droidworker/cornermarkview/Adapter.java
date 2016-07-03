@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.droidworker.cornermarkviewlib.CornerMarkLocation;
 import com.droidworker.cornermarkviewlib.CornerMarkType;
+import com.droidworker.cornermarkviewlib.drawable.CornerMarkDrawable;
 import com.droidworker.cornermarkviewlib.drawable.RectangleMarkDrawable;
 import com.droidworker.cornermarkviewlib.drawable.TrapezoidMarkDrawable;
 import com.droidworker.cornermarkviewlib.view.CornerMarkView;
@@ -20,6 +22,7 @@ import java.util.List;
  * @author https://github.com/DroidWorkerLYF
  */
 public class Adapter extends BaseAdapter {
+    private static final String TAG = Adapter.class.getSimpleName();
     private List<Data> mList = new ArrayList<>();
     private int[] text = new int[]{R.string.text_1, R.string.text_2, R.string.text_3, R.string.text_4,
             R.string.text_5,R.string.text_6,R.string.text_7,R.string.text_8,R.string.text_9,
@@ -85,32 +88,27 @@ public class Adapter extends BaseAdapter {
         if(cornerMarkType != null){
             type = cornerMarkType.getType();
         }
-//        if(type == data.type){
-//            CornerMarkDrawable cornerMarkDrawable = viewHolder.cornerMarkView
-//                    .getMarkBackground();
-//            cornerMarkDrawable.setColor(data.color);
-//        } else if(data.type == CornerMarkType.TYPE_TRAPEZOID.getType()){
-//            CornerMarkDrawable drawable = viewHolder.cornerMarkView.getMarkDrawable(data.type);
-//            if(drawable != null){
-//                drawable.setColor(data.color);
-//            } else {
-//                viewHolder.cornerMarkView.setMarkBackground(createTrapezoid(data.color));
-//            }
-//
-//        } else if(data.type == CornerMarkType.TYPE_RECTANGLE.getType()){
-//            CornerMarkDrawable drawable = viewHolder.cornerMarkView.getMarkDrawable(data.type);
-//            if(drawable != null){
-//                drawable.setColor(data.color);
-//            } else {
-//                viewHolder.cornerMarkView.setMarkBackground(createGradient(data.color));
-//            }
-//        }
+        if(type == data.type){
+            CornerMarkDrawable cornerMarkDrawable = viewHolder.cornerMarkView
+                    .getMarkBackground();
+            cornerMarkDrawable.setColor(data.color);
+        } else {
+            CornerMarkDrawable drawable = viewHolder.cornerMarkView.getMarkDrawable(data.type,
+                    CornerMarkLocation.RIGHT_TOP);
+            if(drawable != null){
+                drawable.setColor(data.color);
+            } else if(data.type == CornerMarkType.TYPE_TRAPEZOID.getType()){
+                viewHolder.cornerMarkView.setMarkBackground(createTrapezoid(data.color));
+            } else if(data.type == CornerMarkType.TYPE_RECTANGLE.getType()){
+                viewHolder.cornerMarkView.setMarkBackground(createGradient(data.color));
+            }
+        }
         viewHolder.cornerMarkView.setText(data.textId);
         return convertView;
     }
 
     public TrapezoidMarkDrawable createTrapezoid(int color){
-        Log.e("lyf", "createTrapezoid");
+        Log.e(TAG, "createTrapezoid");
         TrapezoidMarkDrawable trapezoidMarkDrawable = new TrapezoidMarkDrawable();
         trapezoidMarkDrawable.setColor(color);
         trapezoidMarkDrawable.setLongSide(120);
@@ -119,7 +117,7 @@ public class Adapter extends BaseAdapter {
     }
 
     public RectangleMarkDrawable createGradient(int color){
-        Log.e("lyf", "createGradient");
+        Log.e(TAG, "createGradient");
         RectangleMarkDrawable rectangleMarkDrawable= new RectangleMarkDrawable();
         rectangleMarkDrawable.setRadiusArray(new float[]{0, 0, 6, 6, 0, 0, 0, 0});
         rectangleMarkDrawable.setColor(color);
